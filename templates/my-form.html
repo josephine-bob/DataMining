@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <h1>Enter the name of the Company</h1>
+    <form action="." method="POST">
+        <input type="text" name="text">
+        <input type="submit" name="my-form" value="Send">
+    </form>
+    {% if sentiments %}
+   		<h4>RESULTS TABLE</h4>
+   		<table style="width:100%">
+  			<tr>
+    			<th>Company Name</th>
+    			<th>Sentiment</th> 
+    			<th>Revenue</th>
+    			<th>Year of foundation</th>
+    			<th>Foundation place</th>
+    			<th>Number of Employees</th>
+  			</tr>
+  			
+    		{% for idx in sentiments %}
+    		<tr>
+    			<td>{{ company_names[loop.index0] }}</td>
+    			<td>{{ sentiments[loop.index0] }}</td>
+    			<td>{{ revenues[loop.index0] }}</td>
+    			<td>{{ foundingYears[loop.index0] }}</td>
+    			<td>{{ foundationPlaces[loop.index0] }}</td>
+    			<td>{{ employees[loop.index0] }}</td>
+    		</tr>
+    		{% endfor %}
+    	
+		</table>
+   	{% endif %}
+
+   	<div>
+   		<link rel="stylesheet" type="text/css" href="http://127.0.0.1:5000/companies_list">
+   	</div>	
+    
+
+</body>
+</html>
