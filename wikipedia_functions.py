@@ -33,6 +33,8 @@ def normalize_text(text):
     """
     Normalize the text
     tokenize, remove stopwords, and lemmatize
+    >>> normalize_text('the carrots are orange')
+    ['carrot', 'orange']
     """
     # put the text in words
     tokenized_text = word_tokenize(text)
@@ -51,6 +53,8 @@ def normalize_text(text):
 def sentiment(words, sentiment_dictionary):
     """
     Evaluate the average sentiment of a list of words
+    >>> sentiment(['kill', 'cry'], open_dictionary())
+    -2.0
     """
     count = 0
     sentiment_value = 0
@@ -104,3 +108,7 @@ def reinitialize():
 
     global companies
     companies = []
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
