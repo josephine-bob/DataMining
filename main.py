@@ -1,13 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Nov 17 15:09:45 2014
-
-@author: davyZOR
+Main code of the application
+using flask
+enables the user to see companies information an plots
 """
-#DOVE METTEREMO I NOSTRI FILE STATICI QUALI CSS ECC..
-#url_for('static', filename='style.css')
-
-
 
 from flask import Flask
 from flask import request
@@ -19,9 +15,11 @@ company_name_list = []
 
 app = Flask(__name__)
 
+
 @app.route('/')
 def my_form():
     return render_template("my-form.html")
+
 
 @app.route('/', methods=['POST'])
 def my_form_post():
@@ -35,20 +33,13 @@ def my_form_post():
     employees_list = db.get_employees(text)
     company_name_list.append(text)
 
-    return render_template("my-form.html", sentiments=sentiment_list, revenues=revenues_list, foundingYears=foundingYears_list, foundationPlaces=foundationPlaces_list, employees=employees_list, company_names=company_name_list)
-    #return text
-    #return render_template("my-form.html", sentiment=result, foundingYear, foundationPlace, revenues)
+    return render_template(
+        "my-form.html", sentiments=sentiment_list,
+        revenues=revenues_list, foundingYears=foundingYears_list,
+        foundationPlaces=foundationPlaces_list,
+        employees=employees_list, company_names=company_name_list
+    )
+
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-#COME GESTIRE HET E POST
-#@app.route('/login', methods=['GET', 'POST'])
-#def login():
-#    if request.method == 'POST':
-#        do_the_login()
-#    else:
-#        show_the_login_form()
-
-
