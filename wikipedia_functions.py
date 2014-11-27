@@ -4,7 +4,7 @@ Useful function to extract words and calculate the sentiment of a page thanks to
 """
 
 import wikipedia
-from nltk import *
+from nltk import word_tokenize, WordNetLemmatizer, corpus
 
 stopwords = corpus.stopwords.words('english')
 
@@ -13,9 +13,9 @@ companies=[]
 
 
 def open_dictionary():
-	"""
-	Put words and their sentiment from the AFINN-111 word list into a dictionary
-	"""
+    """
+    Put words and their sentiment from the AFINN-111 word list into a dictionary
+    """
     words=[]
     sentiment_words=[]
     with open('AFINN/AFINN-111.txt', 'r') as in_file:
@@ -24,14 +24,14 @@ def open_dictionary():
             words.append(line.split('\t')[0]) 
             sentiment_words.append(line.split('\t')[1].split('\n')[0])
             
-        return dict(zip(words, sentiment_words))
+    return dict(zip(words, sentiment_words))
        
 
 def normalize_text(text):
-	"""
-	Normalize the text
-	tokenize, remove stopwords, and lemmatize
-	"""
+    """
+    Normalize the text
+    tokenize, remove stopwords, and lemmatize
+    """
     #put the text in words
     tokenized_text = word_tokenize(text)
     #remove stopwords
@@ -43,9 +43,9 @@ def normalize_text(text):
 
 
 def sentiment(words, sentiment_dictionary):
-	"""
-	Evaluate the average sentiment of a list of words
-	"""
+    """
+    Evaluate the average sentiment of a list of words
+    """
     count = 0
     sentiment_value = 0
     average_sentiment = 0
@@ -56,15 +56,15 @@ def sentiment(words, sentiment_dictionary):
                 count += 1
                 sentiment_value += float(sentiment_dictionary[key])
             if count > 0:
-			#if there is at least one word, calculate the average dividing the sum by the number of words
+                #if there is at least one word, calculate the average dividing the sum by the number of words
                 average_sentiment = sentiment_value/count
                 
     return average_sentiment
 
 def company_sentiment(company):
-	"""
-	Evaluate the average sentiment of a company from its wikipedia page 
-	"""
+    """
+    Evaluate the average sentiment of a company from its wikipedia page 
+    """
     #load the page and extract content
     page = wikipedia.page(company)
     text = page.content
@@ -72,26 +72,26 @@ def company_sentiment(company):
     #load the dictionary
     sentiment_dictionary = open_dictionary()
     
-	#normalize the text
+    #normalize the text
     normalized_text = normalize_text(text)
     
     #calculate the average sentiment
     average_sentiment.append(sentiment(normalized_text,sentiment_dictionary))              
     
-	#stock the companies
+    #stock the companies
     companies.append(company)
 	
     return average_sentiment
 
 
 def reinitialize():
-	"""
-	Put the data collected to empty list, if you want to start another comparison
-	"""
+    """
+    Put the data collected to empty list, if you want to start another comparison
+    """
     global average_sentiment
     average_sentiment = []
 	
-	global companies
+    global companies
     companies = []
     
     
