@@ -98,6 +98,16 @@ def company_sentiment(company):
     return average_sentiment
 
 
+def load_companies_list():    
+    """
+    return the list of the multinational companies on wikipedia
+    """
+    page = wikipedia.page('List_of_multinational_corporations')
+    companies_list = page.links
+
+    return companies_list
+
+
 def reinitialize():
     """
     Put the data collected to empty list,
