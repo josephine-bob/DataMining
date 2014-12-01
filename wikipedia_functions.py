@@ -14,19 +14,19 @@ companies = []
 
 
 def open_dictionary():
-    """
-    Put words and their sentiment into a dictionary
-    From the AFINN-111 word list
-    """
-    words = []
-    sentiment_words = []
-    with open('AFINN/AFINN-111.txt', 'r') as in_file:
-        for line in in_file.readlines():
-            # word and values are separated by a tab
-            words.append(line.split('\t')[0])
-            sentiment_words.append(line.split('\t')[1].split('\n')[0])
-
-    return dict(zip(words, sentiment_words))
+    word=[]
+    sentScore=[]
+    try:
+        with open('AFINN/AFINN-111.txt', 'r') as in_file:
+            for line in in_file.readlines():
+                # word and values are separated by a tab
+                word.append(line.split('\t')[0]) 
+                sentScore.append(line.split('\t')[1].split('\n')[0])
+            
+            return dict(zip(word, sentScore))
+    except IOError:
+        print "ERROR: CAN NOT FIND THE FILE"
+        return
 
 
 def normalize_text(text):

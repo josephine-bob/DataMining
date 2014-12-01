@@ -18,33 +18,14 @@ def convert_into_integer(list1):
     return converted_list
 
 
-def join_lists(list1, list2):
-    """
-    Put 2 lists together
-    >>> join_lists([1], [2])
-    [[1], [2]]
-    """
-    final_list = []
-    final_list.append(list1)
-    final_list.append(list2)
-
-    return final_list
-
-
-def correlate(list1, list2):
-    """
-    return correlation matrix for the 2 lists given
-    """
-    final_list = join_lists(list1, list2)
-
-    return np.corrcoef(final_list)
-
-
 def triple_correlate(list1, list2, list3):
     """
     return correlation matrix for the 3 lists given
     """
-    final_list = join_lists(list1, join_lists(list2, list3))
+    final_list = []
+    final_list.append(list1)
+    final_list.append(list2)
+    final_list.append(list3)
 
     return np.corrcoef(final_list)
 

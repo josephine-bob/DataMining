@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Useful functions to extract data on dbdata
 """
@@ -13,10 +12,11 @@ foundationPlaces_list = []
 branch_list = []
 
 
-def get_employees(company):
+def get_employees(comp):
     """
     Extract employees information
     """
+    company = comp.replace (" ", "_")
     query_string = """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         SELECT ?label
         WHERE {
@@ -33,10 +33,11 @@ def get_employees(company):
     return employees_list
 
 
-def get_revenue(company):
+def get_revenue(comp):
     """
     Extract revenue information
     """
+    company = comp.replace (" ", "_")
     query_string = """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         SELECT ?label
         WHERE {
@@ -48,63 +49,18 @@ def get_revenue(company):
     results = sparql.query().convert()
 
     for result in results["results"]["bindings"]:
-<<<<<<< HEAD
         #revenue values in DBPEDIA are like 0.478E10, so I convert them into float
         converted_value = '{0:.2f}'.format(float(result["label"]["value"]))
         revenues_list.append(converted_value)
 
-        revenues_list.append(result["label"]["value"])
-
     return revenues_list
 
 
-def get_foundingYear(company):
-    """
-    Extract year of foundation
-    """
-    query_string = """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-        SELECT ?label
-        WHERE {
-        <http://dbpedia.org/resource/"""+company+"""> dbpedia-owl:foundingYear ?label .
-        }"""
-    sparql = SPARQLWrapper("http://dbpedia.org/sparql")
-    sparql.setQuery(query_string)
-    sparql.setReturnFormat(JSON)
-    results = sparql.query().convert()
-
-    for result in results["results"]["bindings"]:
-        foundingYear = result["label"]["value"]
-        foundingYear = foundingYear[:-12]
-        foundingYears_list.append(foundingYear)
-
-    return foundingYears_list
-
-
-def get_foundationPlace(company):
-    """
-    Extract place information
-    """
-    query_string = """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-        SELECT ?label
-        WHERE {
-        <http://dbpedia.org/resource/"""+company+"""> dbpedia-owl:foundationPlace ?label .
-        }"""
-    sparql = SPARQLWrapper("http://dbpedia.org/sparql")
-    sparql.setQuery(query_string)
-    sparql.setReturnFormat(JSON)
-    results = sparql.query().convert()
-
-    for result in results["results"]["bindings"]:
-        place = result["label"]["value"]
-        #slicing string with just useful information we need
-        place = place[28:]
-        foundationPlaces_list.append(place)
-    return foundationPlaces_list
-
-def get_branch(company):
+def get_branch(comp):
     """
     Extract industry information
     """
+    company = comp.replace (" ", "_")
     #I create a sublist because each company could belong to different branches
     sublist = []
 
@@ -129,7 +85,6 @@ def get_branch(company):
     return branch_list
 
 
-
 def empty_lists():
     """
     Reinitialize all the data to start another study
@@ -141,7 +96,6 @@ def empty_lists():
     sentiment_list = []
     revenues_list = []
     foundingYears_list = []
-    foundationPlaces_list = []
     foundationPlaces_list = []
 
 

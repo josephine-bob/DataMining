@@ -30,10 +30,14 @@ table.gridtable td {
 
 
 <body>
-    <h1>Enter the name of the Company</h1>
+    <h1>Choose the name of a company</h1>
     <form action="." method="POST">
-        <input type="text" name="text">
-        <input type="submit" name="my-form" value="Send">
+        <select name="option" width="300px">
+			{% for o in option_list %}
+				<option name="{{ o }}" SELECTED>{{ o }}</option>
+			{% endfor %}
+		</select>
+        <input type="submit" name="my-form" value="Select">
     </form>
     {% if sentiments %}
     	<div id="table">
@@ -43,8 +47,6 @@ table.gridtable td {
     			<th>Company Name</th>
     			<th>Sentiment</th> 
     			<th>Revenue</th>
-    			<th>Year of foundation</th>
-    			<th>Foundation place</th>
     			<th>Number of Employees</th>
     			<th>Branches of interest</th>
   			</tr>
@@ -54,8 +56,6 @@ table.gridtable td {
     			<td>{{ company_names[loop.index0] }}</td>
     			<td>{{ sentiments[loop.index0] }}</td>
     			<td>{{ revenues[loop.index0] }}</td>
-    			<td>{{ foundingYears[loop.index0] }}</td>
-    			<td>{{ foundationPlaces[loop.index0] }}</td>
     			<td>{{ employees[loop.index0] }}</td>
     			<td>{{ branches[loop.index0] }}</td>
     		</tr>
@@ -64,25 +64,13 @@ table.gridtable td {
 		</table>
 		</div>
 			
-		<div align="center">
-			<h2>SCATTER PLOT SENTIMENT-REVENUES</h4>
+		<div style="display: inline-block; text-align: center;" >
+			<h3>SCATTER PLOT SENTIMENT-REVENUES</h3>
 			<img src="data:image/png;base64 ,{{ plot_sent_rev }}">
 		</div>
-		<div>
-			<h5>Correlation Matrix Sentiment-Number of Employees</h5>
-			{% for idx in sentiments %}
-				<p>{{ sent_empl_mx[loop.index0] }}</p>
-			{% endfor %}
-		</div>
-		<div>
-			<h5>Correlation Matrix Sentiment-Revenues</h5>
-			{% for idx in sentiments %}
-				<p>{{ sent_rev_mx[loop.index0] }}</p>
-			{% endfor %}
-		</div>
-		<div>
-			<h5>Correlation Matrix Sentiment-Number of Employees-Revenues</h5>
-			{% for idx in sentiments %}
+		<div style="display: inline-block; vertical-align:top;">
+			<h3>Correlation Matrix Sentiment-Number of Employees-Revenues</h3>
+			{% for idx in [1,2,3] %}
 				<p>{{ sent_empl_rev_mx[loop.index0] }}</p>
 			{% endfor %}
 		</div>
