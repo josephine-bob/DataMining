@@ -85,7 +85,7 @@ def get_branch(company):
         # slicing the string to extract just the relevant information
         final_value = temp_value[28:]
         sublist.append(final_value)
-    
+
     branch_list.append(sublist)
 
     return branch_list

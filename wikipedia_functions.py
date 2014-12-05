@@ -11,15 +11,15 @@ stopwords = corpus.stopwords.words('english')
 
 
 def open_dictionary():
-    word=[]
-    sentScore=[]
+    word = []
+    sentScore = []
     try:
         with open('AFINN/AFINN-111.txt', 'r') as in_file:
             for line in in_file.readlines():
                 # word and values are separated by a tab
-                word.append(line.split('\t')[0]) 
+                word.append(line.split('\t')[0])
                 sentScore.append(line.split('\t')[1].split('\n')[0])
-            
+
             return dict(zip(word, sentScore))
     except IOError:
         print "ERROR: CAN NOT FIND THE FILE"
@@ -92,7 +92,7 @@ def company_sentiment(company):
     return average_sentiment
 
 
-def load_companies_list():    
+def load_companies_list():
     """
     return the list of the multinational companies on wikipedia
     """
