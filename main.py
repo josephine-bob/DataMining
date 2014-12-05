@@ -64,7 +64,8 @@ def my_form_post():
 
         return render_template(
             "my-form.html", option_list=option_list,
-
+             company_names_bis=company_name_list_bis,
+             sentiments_bis=sentiment_list_bis
         )
 
     elif(revenues_temp == revenues_list):
