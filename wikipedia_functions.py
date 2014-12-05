@@ -9,9 +9,6 @@ from nltk import word_tokenize, WordNetLemmatizer, corpus
 
 stopwords = corpus.stopwords.words('english')
 
-average_sentiment = []
-companies = []
-
 
 def open_dictionary():
     word=[]
@@ -90,10 +87,7 @@ def company_sentiment(company):
     normalized_text = normalize_text(text)
 
     # calculate the average sentiment
-    average_sentiment.append(sentiment(normalized_text, sentiment_dictionary))
-
-    # stock the companies
-    companies.append(company)
+    average_sentiment = sentiment(normalized_text, sentiment_dictionary)
 
     return average_sentiment
 
@@ -107,17 +101,6 @@ def load_companies_list():
 
     return companies_list
 
-
-def reinitialize():
-    """
-    Put the data collected to empty list,
-    if you want to start another comparison
-    """
-    global average_sentiment
-    average_sentiment = []
-
-    global companies
-    companies = []
 
 if __name__ == "__main__":
     import doctest

@@ -41,40 +41,55 @@ table.gridtable td {
     </form>
     {% if sentiments %}
     	<div id="table">
-   		<h4>RESULTS TABLE</h4>
-   		<table class="gridtable" style="width:100%">
-  			<tr>
-    			<th>Company Name</th>
-    			<th>Sentiment</th> 
-    			<th>Revenue</th>
-    			<th>Number of Employees</th>
-    			<th>Branches of interest</th>
-  			</tr>
-  			
-    		{% for idx in sentiments %}
-    		<tr>
-    			<td>{{ company_names[loop.index0] }}</td>
-    			<td>{{ sentiments[loop.index0] }}</td>
-    			<td>{{ revenues[loop.index0] }}</td>
-    			<td>{{ employees[loop.index0] }}</td>
-    			<td>{{ branches[loop.index0] }}</td>
-    		</tr>
-    		{% endfor %}
-    	
-		</table>
-		</div>
+			<h4>RESULTS TABLE</h4>
+			<table class="gridtable" style="width:100%">
+				<tr>
+					<th>Company Name</th>
+					<th>Sentiment</th> 
+					<th>Revenue</th>
+					<th>Number of Employees</th>
+					<th>Branches of interest</th>
+				</tr>
+				
+				{% for idx in sentiments %}
+				<tr>
+					<td>{{ company_names[loop.index0] }}</td>
+					<td>{{ sentiments[loop.index0] }}</td>
+					<td>{{ revenues[loop.index0] }}</td>
+					<td>{{ employees[loop.index0] }}</td>
+					<td>{{ branches[loop.index0] }}</td>
+				</tr>
+				{% endfor %}
 			
-		<div style="display: inline-block; text-align: center;" >
+			</table>
+		</div>
+		
+		<div style="display: inline-block; vertical-align: top; text-align: center;">
 			<h3>SCATTER PLOT SENTIMENT-REVENUES</h3>
 			<img src="data:image/png;base64 ,{{ plot_sent_rev }}">
 		</div>
-		<div style="display: inline-block; vertical-align:top;">
+		
+		<div style="display: inline-block; vertical-align: top; text-align: center;">	
 			<h3>Correlation Matrix Sentiment-Number of Employees-Revenues</h3>
-			{% for idx in [1,2,3] %}
-				<p>{{ sent_empl_rev_mx[loop.index0] }}</p>
-			{% endfor %}
-		</div>
-   	{% endif %}
+			<p>{{ sent_empl_rev_mx[0] }}</p>
+			<p>{{ sent_empl_rev_mx[1] }}</p>
+			<p>{{ sent_empl_rev_mx[2] }}</p>
 
+		</div>		
+	{% endif %}
+	{% if sentiments_bis %}
+		<h3>Companies without information</h3>
+		<table class="gridtable">
+			<tr>
+				<th>Company Name</th>
+				<th>Sentiment</th>
+			</tr>
+			{% for idx in sentiments_bis %}
+				<tr>
+					<td>{{ company_names_bis[loop.index0] }}</td>
+					<td>{{ sentiments_bis[loop.index0] }}</td>
+				</tr>
+			{% endfor %}
+	{% endif %}
 </body>
 </html>
