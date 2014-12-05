@@ -30,8 +30,8 @@ table.gridtable td {
 
 
 <body>
-    <h1>Choose the name of a company</h1>
     <form action="." method="POST">
+	    <h1>Choose the name of a company</h1>
         <select name="option" width="300px">
 			{% for o in option_list %}
 				<option name="{{ o }}" SELECTED>{{ o }}</option>

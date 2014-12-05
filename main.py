@@ -30,12 +30,12 @@ app = Flask(__name__)
 
 
 @app.route('/')
-def my_form():
-    return render_template("my-form.html", option_list=option_list)
+def index():
+    return render_template("index.html", option_list=option_list)
 
 
 @app.route('/', methods=['POST'])
-def my_form_post():
+def index_post():
 
     global sentiment_list
     global sentiment_list_bis
@@ -44,36 +44,35 @@ def my_form_post():
     global branches_list
     global company_name_list
     global company_name_list_bis
-    global error_message
     global graph_relation_sent_rev
     global correlation_sent_empl_rev
 
     comp = request.form['option']
 
     # saving the former revenue list
-    revenues_temp = []
     revenues_temp = list(revenues_list)
 
     # trying to extract information
     revenues_list = db.get_revenue(comp)
 
-    # if no revenue information is added we compute only the sentiment
+    # if the first company doesn't have information
     if (len(revenues_list) == 0):
         sentiment_list_bis.append(wiki_fun.company_sentiment(comp))
         company_name_list_bis.append(comp)
 
         return render_template(
-            "my-form.html", option_list=option_list,
-             company_names_bis=company_name_list_bis,
-             sentiments_bis=sentiment_list_bis
+            "index.html", option_list=option_list,
+            company_names_bis=company_name_list_bis,
+            sentiments_bis=sentiment_list_bis
         )
 
+    # if no revenue information is added we compute only the sentiment
     elif(revenues_temp == revenues_list):
         sentiment_list_bis.append(wiki_fun.company_sentiment(comp))
         company_name_list_bis.append(comp)
 
         return render_template(
-            "my-form.html", option_list=option_list,
+            "index.html", option_list=option_list,
             sentiments=sentiment_list,
             sentiments_bis=sentiment_list_bis,
             revenues=revenues_list,
@@ -85,6 +84,7 @@ def my_form_post():
             plot_sent_rev=graph_relation_sent_rev
         )
 
+    # if we effectively collected information
     else:
         sentiment_list.append(wiki_fun.company_sentiment(comp))
         employees_list = db.get_employees(comp)
@@ -107,7 +107,7 @@ def my_form_post():
         )
 
         return render_template(
-            "my-form.html", option_list=option_list,
+            "index.html", option_list=option_list,
             sentiments=sentiment_list,
             sentiments_bis=sentiment_list_bis,
             revenues=revenues_list,
